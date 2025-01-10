@@ -27,6 +27,7 @@ class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents{
       'water_enemy.png',
       'misidra.jpeg',
       'misidra2.png',
+      'misidra3.png',
     ]);
 
     camera.viewfinder.anchor = Anchor.topLeft;
@@ -40,9 +41,17 @@ class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents{
     add(_emberPlayer);
     add(EmberPlayer(position: Vector2(300, 100)));
 
+    final objectGroupMisidras = mapa1.tileMap.getLayer<ObjectGroup>('misidras');
+
+    for (final posMisidraEnMapa in objectGroupMisidras!.objects) {
+
+      add(Misidra(position: Vector2(posMisidraEnMapa.x*0.5, posMisidraEnMapa.y*0.4)));
+    }
+
+    /*
     _misidra=Misidra(position: Vector2(500, 100));
     add(_misidra);
-
+*/
     //camera.viewfinder.zoom = 0.25;
 
     return super.onLoad();

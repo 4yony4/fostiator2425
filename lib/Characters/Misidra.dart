@@ -9,11 +9,11 @@ class Misidra extends SpriteAnimationComponent with HasGameReference<FostiatorGa
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('misidra2.png'),
+      game.images.fromCache('misidra3.png'),
       SpriteAnimationData.sequenced(
-        amount: 2,
+        amount: 3,
         textureSize: Vector2(246,246),
-        stepTime: 0.12,
+        stepTime: 0.52,
       ),
     );
 
