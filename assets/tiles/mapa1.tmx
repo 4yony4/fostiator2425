@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="128" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="11">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="128" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="27">
  <tileset firstgid="1" source="tilesets/Ecenario.tsx"/>
  <tileset firstgid="19" source="tilesets/paleta_obj1.tsx"/>
  <layer id="1" name="Tile Layer 1" width="30" height="20">
@@ -50,11 +50,14 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="colisiones_objetos" visible="0">
-  <object id="1" x="1116.13" y="1493.55" width="351.613" height="329.032"/>
-  <object id="2" x="2064.52" y="1464.52" width="248.387" height="325.806"/>
+ <objectgroup id="3" name="colisiones_rectangulos">
+  <object id="14" x="3.22581" y="796.774" width="770.968" height="96.7742"/>
+  <object id="15" x="2561.29" y="1309.68" width="1019.35" height="100"/>
+  <object id="16" x="6.45161" y="1809.68" width="2677.42" height="729.032"/>
+  <object id="19" x="2687.1" y="2048.39" width="770.968" height="129.032"/>
+  <object id="20" x="3461.29" y="1812.9" width="377.419" height="367.742"/>
  </objectgroup>
- <objectgroup id="4" name="misidras">
+ <objectgroup id="4" name="misidras" visible="0">
   <object id="5" x="209.677" y="693.548">
    <point/>
   </object>
@@ -71,6 +74,15 @@
    <point/>
   </object>
   <object id="10" x="3080.65" y="1725.81">
+   <point/>
+  </object>
+  <object id="11" x="1519.35" y="606.452">
+   <point/>
+  </object>
+  <object id="12" x="2293.55" y="612.903">
+   <point/>
+  </object>
+  <object id="13" x="1896.77" y="187.097">
    <point/>
   </object>
  </objectgroup>

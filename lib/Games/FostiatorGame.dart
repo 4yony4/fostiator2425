@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -8,7 +9,9 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:fostiator/Characters/EmberPlayer.dart';
 import 'package:fostiator/Characters/Misidra.dart';
 
-class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents{
+import '../Colisiones/RectangularColision.dart';
+
+class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents,HasCollisionDetection{
 
   late EmberPlayer _emberPlayer;
   late Misidra _misidra;
@@ -42,10 +45,15 @@ class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents{
     add(EmberPlayer(position: Vector2(300, 100)));
 
     final objectGroupMisidras = mapa1.tileMap.getLayer<ObjectGroup>('misidras');
+    final colisiones_rectangulos = mapa1.tileMap.getLayer<ObjectGroup>('colisiones_rectangulos');
 
     for (final posMisidraEnMapa in objectGroupMisidras!.objects) {
-
       add(Misidra(position: Vector2(posMisidraEnMapa.x*0.5, posMisidraEnMapa.y*0.4)));
+    }
+
+    for (final rectColision in colisiones_rectangulos!.objects) {
+      add(RectangularColision(position: Vector2(rectColision.x*0.5, rectColision.y*0.4),
+      size: Vector2(rectColision.width*0.5, rectColision.height*0.4)));
     }
 
     /*

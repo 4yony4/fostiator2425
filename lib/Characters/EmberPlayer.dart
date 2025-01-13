@@ -1,22 +1,27 @@
 import 'dart:ui';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:fostiator/Colisiones/RectangularColision.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
 
 class EmberPlayer extends SpriteAnimationComponent
-    with HasGameReference<FostiatorGame>, KeyboardHandler {
+    with HasGameReference<FostiatorGame>, KeyboardHandler, CollisionCallbacks {
 
   int horizontalDirection = 0;
   final Vector2 velocidad = Vector2.zero();
   final double aceleracion = 200;
 
-  final double gravity = 15;
+  final double gravity = 50;
   final double jumpSpeed = 600;
-  final double terminalVelocity = 150;
+  //final double terminalVelocity = 150;
 
   bool hasJumped = false;
+  bool isOnGround=false;
+  bool isRightWall=false;
+  bool isLeftWall=false;
 
   EmberPlayer({required super.position,}) :
         super(size: Vector2(64,64), anchor: Anchor.center);
@@ -31,6 +36,8 @@ class EmberPlayer extends SpriteAnimationComponent
         stepTime: 0.12,
       ),
     );
+
+    add(CircleHitbox(collisionType: CollisionType.active));
   }
 
   @override
@@ -43,20 +50,29 @@ class EmberPlayer extends SpriteAnimationComponent
     super.update(dt);
 
     velocidad.x = horizontalDirection * aceleracion ;
-    velocidad.y+=gravity;
+    double temp=gravity;
+    if (isOnGround) {
+      temp=0;
+    }
 
     // Determine if ember has jumped
     if (hasJumped) {
-      //if (isOnGround) {
+      if (isOnGround) {
         velocidad.y = -jumpSpeed;
-        //isOnGround = false;
-      //}
+        isOnGround=false;
+      }
       hasJumped = false;
     }
 
+
+
   // Prevent ember from jumping to crazy fast as well as descending too fast and
   // crashing through the ground or a platform.
-    velocidad.y = velocidad.y.clamp(-jumpSpeed, terminalVelocity);
+    velocidad.y += temp;
+    velocidad.y = velocidad.y.clamp(-jumpSpeed, temp);
+
+
+    //print("------->>>>>>>>>>>>>>>> UPDATE: $velocidad");
 
     position += velocidad * dt;
 
@@ -80,8 +96,8 @@ class EmberPlayer extends SpriteAnimationComponent
       horizontalDirection=-1;
     }
 
-    if(keysPressed.contains(LogicalKeyboardKey.keyD) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowRight)){
+    if((keysPressed.contains(LogicalKeyboardKey.keyD) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowRight)) && !isRightWall){
       horizontalDirection=1;
     }
 
@@ -89,4 +105,43 @@ class EmberPlayer extends SpriteAnimationComponent
 
     return super.onKeyEvent(event, keysPressed);
   }
+
+  @override
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
+    // TODO: implement onCollisionStart
+
+    if(other is RectangularColision){
+      print("INTRESCCION: $intersectionPoints Y EL OTHER: ${other.position} SIZE: ${other.size}");
+
+      //if(other.y-5<intersectionPoints[] &&)
+      if(other.y == intersectionPoints.first.y){
+        isOnGround=true;
+      }
+      else if(other.x == intersectionPoints.first.x){
+        isRightWall=true;
+      }
+      else if((other.x+other.width) == intersectionPoints.first.x){
+        isLeftWall=true;
+      }
+
+    }
+
+
+
+    super.onCollisionStart(intersectionPoints, other);
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    // TODO: implement onCollisionEnd
+    if(other is RectangularColision){
+      isOnGround=false;
+      isRightWall=false;
+      isLeftWall=false;
+    }
+
+    super.onCollisionEnd(other);
+  }
+
+
 }
