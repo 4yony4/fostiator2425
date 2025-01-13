@@ -37,6 +37,7 @@ dependencies:
   #cupertino_icons: ^1.0.8
   flame: 1.22.0
   flame_tiled: 1.21.1
+  flame_audio: ^2.10.6
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/tiles/mapa1.tmx
     - assets/tiles/tilesets/Ecenario.tsx
     - assets/tiles/tilesets/paleta_obj1.tsx
+    - assets/audio/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

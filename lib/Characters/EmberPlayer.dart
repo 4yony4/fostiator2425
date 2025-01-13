@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:fostiator/Colisiones/CirularColision.dart';
 import 'package:fostiator/Colisiones/RectangularColision.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
 
@@ -57,10 +58,10 @@ class EmberPlayer extends SpriteAnimationComponent
 
     // Determine if ember has jumped
     if (hasJumped) {
-      if (isOnGround) {
+      //if (isOnGround) {
         velocidad.y = -jumpSpeed;
-        isOnGround=false;
-      }
+        //isOnGround=false;
+      //}
       hasJumped = false;
     }
 
@@ -110,8 +111,13 @@ class EmberPlayer extends SpriteAnimationComponent
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     // TODO: implement onCollisionStart
 
+    if(other is CirularColision){
+      //print("INTRESCCION: $intersectionPoints Y EL OTHER: ${other.position} SIZE: ${other.size}");
+      //print("HEY HEY HEY!!!!");
+    }
+
     if(other is RectangularColision){
-      print("INTRESCCION: $intersectionPoints Y EL OTHER: ${other.position} SIZE: ${other.size}");
+      //print("INTRESCCION: $intersectionPoints Y EL OTHER: ${other.position} SIZE: ${other.size}");
 
       //if(other.y-5<intersectionPoints[] &&)
       if(other.y == intersectionPoints.first.y){

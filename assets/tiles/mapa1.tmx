@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="128" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="27">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="128" tileheight="128" infinite="0" nextlayerid="7" nextobjectid="36">
  <tileset firstgid="1" source="tilesets/Ecenario.tsx"/>
  <tileset firstgid="19" source="tilesets/paleta_obj1.tsx"/>
  <layer id="1" name="Tile Layer 1" width="30" height="20">
@@ -57,6 +57,15 @@
   <object id="19" x="2687.1" y="2048.39" width="770.968" height="129.032"/>
   <object id="20" x="3461.29" y="1812.9" width="377.419" height="367.742"/>
  </objectgroup>
+ <objectgroup id="5" name="colisiones_circulos" visible="0">
+  <object id="33" x="1116.13" y="1480.65" width="335.484" height="325.806">
+   <ellipse/>
+  </object>
+  <object id="34" x="2006.45" y="1416.13" width="358.065" height="419.355">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="colisiones_polinomio"/>
  <objectgroup id="4" name="misidras" visible="0">
   <object id="5" x="209.677" y="693.548">
    <point/>
