@@ -1,10 +1,12 @@
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
 
+import 'Apps/FostiatorApp.dart';
 import 'Menus/MainMenu.dart';
 
-void main() {
+void main() async{
   /*runApp(
     const GameWidget<FostiatorGame>.controlled(
       gameFactory: FostiatorGame.new,
@@ -20,6 +22,14 @@ void main() {
         initialActiveOverlays: const ['MainMenu'],
       ),
     );
+
+    //WidgetsFlutterBinding.ensureInitialized();
+
+    // Initialize the camera
+    //final cameras = await availableCameras();
+    //final firstCamera = cameras.first;
+
+    //runApp(FostiatorApp(camera: firstCamera));
 
 
 }

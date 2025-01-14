@@ -40,7 +40,7 @@ class Misidra extends SpriteAnimationComponent with HasGameReference<FostiatorGa
     // TODO: implement onCollisionStart
 
     if(other is EmberPlayer){
-      size*=2;
+      //size*=2;
 
       //if(intersectionPoints.first.y==(other.y+other.height)){
         //removeFromParent();
@@ -55,7 +55,7 @@ class Misidra extends SpriteAnimationComponent with HasGameReference<FostiatorGa
   void onCollisionEnd(PositionComponent other) {
     // TODO: implement onCollisionEnd
     if(other is EmberPlayer){
-      size/=2;
+      //size/=2;
       //if(intersectionPoints.first.y==(other.y+other.height)){
       //removeFromParent();
       //}

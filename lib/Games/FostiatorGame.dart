@@ -7,6 +7,8 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fostiator/Characters/EmberPlayer.dart';
 import 'package:fostiator/Characters/Misidra.dart';
 import 'package:fostiator/Colisiones/CirularColision.dart';
@@ -15,6 +17,7 @@ import '../Colisiones/RectangularColision.dart';
 
 class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents,HasCollisionDetection{
 
+  late JoystickComponent joystick;
   late EmberPlayer _emberPlayer;
   late Misidra _misidra;
 
@@ -44,7 +47,16 @@ class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents,HasColli
     mapa1.scale = Vector2(0.5, 0.4);
     add(mapa1);
 
-    _emberPlayer=EmberPlayer(position: Vector2(50, 100));
+    // Create the joystick
+    joystick = JoystickComponent(
+      knob: CircleComponent(radius: 15, paint: Paint()..color = Colors.blue),
+      background: CircleComponent(radius: 50, paint: Paint()..color = Colors.blue.withOpacity(0.5)),
+      margin: const EdgeInsets.only(left: 20, bottom: 20),
+    );
+
+    add(joystick);
+
+    _emberPlayer=EmberPlayer(position: Vector2(50, 100),joystick);
 
 
     final objectGroupMisidras = mapa1.tileMap.getLayer<ObjectGroup>('misidras');
@@ -65,6 +77,9 @@ class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents,HasColli
           size: Vector2(cirColision.width*0.5, cirColision.height*0.4)));
     }
 
+
+
+
     /*
     _misidra=Misidra(position: Vector2(500, 100));
     add(_misidra);
@@ -78,8 +93,8 @@ class FostiatorGame extends FlameGame with HasKeyboardHandlerComponents,HasColli
 
   void nuevoJuego(){
     add(_emberPlayer);
-    add(EmberPlayer(position: Vector2(300, 100)));
-    FlameAudio.bgm.play('music_back.mp3', volume: .75);
+    add(EmberPlayer(position: Vector2(300, 100),joystick));
+    //FlameAudio.bgm.play('music_back.mp3', volume: .75);
   }
 
   @override

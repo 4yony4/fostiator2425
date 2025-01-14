@@ -65,7 +65,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup id="6" name="colisiones_polinomio"/>
+ <objectgroup id="6" name="colisiones_polinomio" visible="0"/>
  <objectgroup id="4" name="misidras" visible="0">
   <object id="5" x="209.677" y="693.548">
    <point/>

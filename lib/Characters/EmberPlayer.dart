@@ -2,14 +2,18 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:fostiator/Characters/Misidra.dart';
 import 'package:fostiator/Colisiones/CirularColision.dart';
 import 'package:fostiator/Colisiones/RectangularColision.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
 
 class EmberPlayer extends SpriteAnimationComponent
     with HasGameReference<FostiatorGame>, KeyboardHandler, CollisionCallbacks {
+
+  final JoystickComponent joystick;
 
   int horizontalDirection = 0;
   final Vector2 velocidad = Vector2.zero();
@@ -23,8 +27,11 @@ class EmberPlayer extends SpriteAnimationComponent
   bool isOnGround=false;
   bool isRightWall=false;
   bool isLeftWall=false;
+  bool hitByEnemy=false;
 
-  EmberPlayer({required super.position,}) :
+  int iVidas=3;
+
+  EmberPlayer(this.joystick, {required super.position,}) :
         super(size: Vector2(64,64), anchor: Anchor.center);
 
   @override
@@ -49,6 +56,8 @@ class EmberPlayer extends SpriteAnimationComponent
   @override
   void update(double dt) {
     super.update(dt);
+
+    position.add(joystick.delta * dt);
 
     velocidad.x = horizontalDirection * aceleracion ;
     double temp=gravity;
@@ -111,6 +120,14 @@ class EmberPlayer extends SpriteAnimationComponent
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     // TODO: implement onCollisionStart
 
+    if(other is Misidra){
+      iVidas--;
+      hit();
+      if(iVidas<=0){
+        removeFromParent();
+      }
+    }
+
     if(other is CirularColision){
       //print("INTRESCCION: $intersectionPoints Y EL OTHER: ${other.position} SIZE: ${other.size}");
       //print("HEY HEY HEY!!!!");
@@ -147,6 +164,23 @@ class EmberPlayer extends SpriteAnimationComponent
     }
 
     super.onCollisionEnd(other);
+  }
+
+  void hit() {
+    if (!hitByEnemy) {
+      hitByEnemy = true;
+    }
+    add(
+      OpacityEffect.fadeOut(
+        EffectController(
+          alternate: true,
+          duration: 0.1,
+          repeatCount: 6,
+        ),
+      )..onComplete = () {
+        hitByEnemy = false;
+      },
+    );
   }
 
 
