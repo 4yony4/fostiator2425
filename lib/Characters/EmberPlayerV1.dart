@@ -10,11 +10,28 @@ import 'package:fostiator/Colisiones/CirularColision.dart';
 import 'package:fostiator/Colisiones/RectangularColision.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
 
-class EmberPlayer extends SpriteAnimationComponent
+class EmberPlayerV1 extends SpriteAnimationComponent
     with HasGameReference<FostiatorGame>, KeyboardHandler, CollisionCallbacks {
 
+  final JoystickComponent joystick;
 
-  EmberPlayer({required super.position,}) :
+  int horizontalDirection = 0;
+  final Vector2 velocidad = Vector2.zero();
+  final double aceleracion = 200;
+
+  final double gravity = 50;
+  final double jumpSpeed = 600;
+  //final double terminalVelocity = 150;
+
+  bool hasJumped = false;
+  bool isOnGround=false;
+  bool isRightWall=false;
+  bool isLeftWall=false;
+  bool hitByEnemy=false;
+
+  int iVidas=3;
+
+  EmberPlayerV1(this.joystick, {required super.position,}) :
         super(size: Vector2(64,64), anchor: Anchor.center);
 
   @override
@@ -28,7 +45,7 @@ class EmberPlayer extends SpriteAnimationComponent
       ),
     );
 
-    //add(CircleHitbox(collisionType: CollisionType.active));
+    add(CircleHitbox(collisionType: CollisionType.active));
   }
 
   @override
@@ -40,9 +57,9 @@ class EmberPlayer extends SpriteAnimationComponent
   void update(double dt) {
     super.update(dt);
 
-    //position.add(joystick.delta * dt);
+    position.add(joystick.delta * dt);
 
-    /*velocidad.x = horizontalDirection * aceleracion ;
+    velocidad.x = horizontalDirection * aceleracion ;
     double temp=gravity;
     if (isOnGround) {
       temp=0;
@@ -51,16 +68,16 @@ class EmberPlayer extends SpriteAnimationComponent
     // Determine if ember has jumped
     if (hasJumped) {
       //if (isOnGround) {
-        velocidad.y = -jumpSpeed;
-        //isOnGround=false;
+      velocidad.y = -jumpSpeed;
+      //isOnGround=false;
       //}
       hasJumped = false;
     }
 
 
 
-  // Prevent ember from jumping to crazy fast as well as descending too fast and
-  // crashing through the ground or a platform.
+    // Prevent ember from jumping to crazy fast as well as descending too fast and
+    // crashing through the ground or a platform.
     velocidad.y += temp;
     velocidad.y = velocidad.y.clamp(-jumpSpeed, temp);
 
@@ -74,11 +91,30 @@ class EmberPlayer extends SpriteAnimationComponent
       flipHorizontally();
     } else if (horizontalDirection > 0 && scale.x < 0) {
       flipHorizontally();
-    }*/
+    }
 
   }
 
-  /*
+  @override
+  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    // TODO: implement onKeyEvent
+
+    horizontalDirection = 0;
+
+    if(keysPressed.contains(LogicalKeyboardKey.keyA) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft)){
+      horizontalDirection=-1;
+    }
+
+    if((keysPressed.contains(LogicalKeyboardKey.keyD) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowRight)) && !isRightWall){
+      horizontalDirection=1;
+    }
+
+    hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
+
+    return super.onKeyEvent(event, keysPressed);
+  }
 
   @override
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
@@ -112,6 +148,9 @@ class EmberPlayer extends SpriteAnimationComponent
       }
 
     }
+
+
+
     super.onCollisionStart(intersectionPoints, other);
   }
 
@@ -143,6 +182,6 @@ class EmberPlayer extends SpriteAnimationComponent
       },
     );
   }
-*/
+
 
 }

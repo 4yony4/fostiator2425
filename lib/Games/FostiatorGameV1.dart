@@ -1,4 +1,4 @@
-import 'dart:async';
+/*import 'dart:async';
 import 'dart:ui';
 
 import 'package:flame/collisions.dart';
@@ -6,30 +6,25 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 import 'package:flutter/material.dart';
-import 'package:fostiator/Bodies/EmberBody.dart';
 import 'package:fostiator/Characters/EmberPlayer.dart';
 import 'package:fostiator/Characters/Misidra.dart';
 import 'package:fostiator/Colisiones/CirularColision.dart';
 
 import '../Colisiones/RectangularColision.dart';
 
-class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisionDetection{
+class FostiatorGameV1 extends FlameGame with HasKeyboardHandlerComponents,HasCollisionDetection{
 
   late JoystickComponent joystick;
-  late EmberBody _emberBody;
+  late EmberPlayer _emberPlayer;
 
-  FostiatorGame():super(gravity: Vector2(0.0, 10.0));
-
-  @override
-  bool get debugMode => false;
 
   @override
   FutureOr<void> onLoad() async {
     // TODO: implement onLoad
+    debugMode=false;
     await images.loadAll([
       'block.png',
       'ember.png',
@@ -45,7 +40,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
     await FlameAudio.audioCache.load('music_back.mp3');
 
-    //camera.viewfinder.anchor = Anchor.center;
+    camera.viewfinder.anchor = Anchor.topLeft;
 
 
     TiledComponent mapa1=await TiledComponent.load("mapa1.tmx", Vector2(128, 128));
@@ -60,9 +55,8 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
     );
 
     add(joystick);
-    _emberBody=EmberBody(joystick,Vector2(50, 100));
 
-    //_emberPlayer=EmberPlayer(position: Vector2(50, 100),joystick);
+    _emberPlayer=EmberPlayer(position: Vector2(50, 100),joystick);
 
 
     final objectGroupMisidras = mapa1.tileMap.getLayer<ObjectGroup>('misidras');
@@ -74,8 +68,8 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
     }
 
     for (final rectColision in colisiones_rectangulos!.objects) {
-      add(RectangularColision(Vector2(rectColision.x*0.5, rectColision.y*0.4),
-      Vector2(rectColision.width*0.5, rectColision.height*0.4)));
+      add(RectangularColision(position: Vector2(rectColision.x*0.5, rectColision.y*0.4),
+      size: Vector2(rectColision.width*0.5, rectColision.height*0.4)));
     }
 
     for (final cirColision in colisiones_circulos!.objects) {
@@ -97,11 +91,9 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
     return super.onLoad();
   }
 
-  void nuevoJuego() async{
-    await add(_emberBody);
-
-    camera.follow(_emberBody,snap: true);
-    //add(EmberPlayer(position: Vector2(300, 100),joystick));
+  void nuevoJuego(){
+    add(_emberPlayer);
+    add(EmberPlayer(position: Vector2(300, 100),joystick));
     //FlameAudio.bgm.play('music_back.mp3', volume: .75);
   }
 
@@ -109,3 +101,5 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
   Color backgroundColor() => const Color(0xFF00AAE4);
 
 }
+
+ */
