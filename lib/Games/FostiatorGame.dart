@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/collisions.dart';
@@ -11,6 +12,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fostiator/Bodies/EmberBody.dart';
+import 'package:fostiator/Bodies/MisidraBody.dart';
 import 'package:fostiator/Characters/EmberPlayer.dart';
 import 'package:fostiator/Characters/Misidra.dart';
 import 'package:fostiator/Colisiones/CirularColision.dart';
@@ -22,13 +24,15 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
   late JoystickComponent joystick;
   late EmberBody _emberBody;
 
-  FostiatorGame():super(gravity: Vector2(0.0, 10.0));
+
+  FostiatorGame():super(gravity: Vector2(0.0, 60.0));
 
   @override
   bool get debugMode => false;
 
   @override
   FutureOr<void> onLoad() async {
+    await super.onLoad();
     // TODO: implement onLoad
     await images.loadAll([
       'block.png',
@@ -45,12 +49,14 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
     await FlameAudio.audioCache.load('music_back.mp3');
 
+    camera.viewport.add(FpsTextComponent());
+    //camera.viewfinder.anchor = Anchor.bottomRight;
     //camera.viewfinder.anchor = Anchor.center;
 
 
     TiledComponent mapa1=await TiledComponent.load("mapa1.tmx", Vector2(128, 128));
-    mapa1.scale = Vector2(0.5, 0.4);
-    add(mapa1);
+    //mapa1.scale = vScale;
+    await world.add(mapa1);
 
     // Create the joystick
     joystick = JoystickComponent(
@@ -59,8 +65,10 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
       margin: const EdgeInsets.only(left: 20, bottom: 20),
     );
 
-    add(joystick);
+
     _emberBody=EmberBody(joystick,Vector2(50, 100));
+
+
 
     //_emberPlayer=EmberPlayer(position: Vector2(50, 100),joystick);
 
@@ -70,37 +78,36 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
     final colisiones_circulos = mapa1.tileMap.getLayer<ObjectGroup>('colisiones_circulos');
 
     for (final posMisidraEnMapa in objectGroupMisidras!.objects) {
-      add(Misidra(position: Vector2(posMisidraEnMapa.x*0.5, posMisidraEnMapa.y*0.4)));
+      await world.add(MisidraBody(Vector2(posMisidraEnMapa.x, posMisidraEnMapa.y)));
     }
 
     for (final rectColision in colisiones_rectangulos!.objects) {
-      add(RectangularColision(Vector2(rectColision.x*0.5, rectColision.y*0.4),
-      Vector2(rectColision.width*0.5, rectColision.height*0.4)));
+      await world.add(RectangularColision(Vector2(rectColision.x, rectColision.y),
+      Vector2(rectColision.width, rectColision.height)));
     }
 
     for (final cirColision in colisiones_circulos!.objects) {
-      add(CirularColision(position: Vector2(cirColision.x*0.5, cirColision.y*0.4),
-          size: Vector2(cirColision.width*0.5, cirColision.height*0.4)));
+      await world.add(CirularColision(position: Vector2(cirColision.x, cirColision.y),
+          size: Vector2(cirColision.width, cirColision.height)));
     }
 
 
+    await add(joystick);
+    await world.add(_emberBody);
 
 
-    /*
-    _misidra=Misidra(position: Vector2(500, 100));
-    add(_misidra);
-*/
-    //camera.viewfinder.zoom = 0.25;
+    camera.viewfinder.zoom=0.4;
+    camera.viewfinder.anchor=const Anchor(0.1, 0.5);
+    camera.follow(_emberBody);
 
-
-
-    return super.onLoad();
   }
 
   void nuevoJuego() async{
-    await add(_emberBody);
 
-    camera.follow(_emberBody,snap: true);
+    //await world.add(_emberBody);
+    //camera.follow(_emberBody);
+
+    //camera.follow(_emberBody,snap: true);
     //add(EmberPlayer(position: Vector2(300, 100),joystick));
     //FlameAudio.bgm.play('music_back.mp3', volume: .75);
   }

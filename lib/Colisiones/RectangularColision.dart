@@ -31,7 +31,8 @@ class RectangularColision extends BodyComponent with ContactCallbacks{
       userData: this
     );
 
-    return world.createBody(bodyDef)..createFixture(fixtureDef);
+
+    return world.createBody(bodyDef)..createFixture(fixtureDef);;
   }
 
   @override

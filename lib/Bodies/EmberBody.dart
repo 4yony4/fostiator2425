@@ -58,6 +58,7 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
     miBodyDef=BodyDef(
       userData: this,
       angularDamping: 0.8,
+      gravityScale: Vector2(0, 30),
       //linearVelocity: Vector2(60, 0),
       position: initialPosition ?? Vector2.zero(),
       type: BodyType.dynamic,
@@ -65,8 +66,13 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
     );
 
     //body.gravityOverride = Vector2(0, 10);
-    return world.createBody(miBodyDef)..createFixture(miFixtureDef);
+      Body bodytemp=world.createBody(miBodyDef)..createFixture(miFixtureDef);
+      //camera.follow(this);
+
+    return bodytemp;
   }
+
+
 
   @override
   void update(double dt) {
@@ -82,7 +88,7 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
       emberSkin.flipHorizontally();
     }
     
-    //camera.moveTo(point)
+    //camera.moveTo(position);
 
   }
 
