@@ -25,7 +25,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
   late EmberBody _emberBody;
 
 
-  FostiatorGame():super(gravity: Vector2(0.0, 60.0));
+  FostiatorGame():super(gravity: Vector2(0.0, 10.0));
 
   @override
   bool get debugMode => false;

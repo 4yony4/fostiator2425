@@ -8,6 +8,10 @@ import '../Games/FostiatorGame.dart';
 class Misidra extends SpriteAnimationComponent with HasGameReference<FostiatorGame>, CollisionCallbacks{
 
 
+  List<SpriteAnimation> animaciones=[];
+  int I_ANIMACION_NORMAL=0;
+  int I_ANIMACION_TOCADO=1;
+
   final effect = GlowEffect(
     10.0,
     EffectController(duration: 3),
@@ -18,14 +22,25 @@ class Misidra extends SpriteAnimationComponent with HasGameReference<FostiatorGa
   @override
   void onLoad() {
 
-    animation = SpriteAnimation.fromFrameData(
+    animaciones.add(SpriteAnimation.fromFrameData(
+      game.images.fromCache('misidra3.png'),
+      SpriteAnimationData.sequenced(
+        amount: 2,
+        textureSize: Vector2(246,246),
+        stepTime: 0.52,
+      ),
+    ));
+
+    animaciones.add(SpriteAnimation.fromFrameData(
       game.images.fromCache('misidra3.png'),
       SpriteAnimationData.sequenced(
         amount: 3,
         textureSize: Vector2(246,246),
         stepTime: 0.52,
       ),
-    );
+    ));
+
+    animation=animaciones[0];
 
     add(RectangleHitbox(collisionType: CollisionType.passive));
     //add(effect);
@@ -35,35 +50,9 @@ class Misidra extends SpriteAnimationComponent with HasGameReference<FostiatorGa
     //sprite = Sprite(groundImage);
   }
 
-  @override
-  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
-    // TODO: implement onCollisionStart
-
-    if(other is EmberPlayer){
-      //size*=2;
-
-      //if(intersectionPoints.first.y==(other.y+other.height)){
-        //removeFromParent();
-      //}
-
-    }
-
-    super.onCollisionStart(intersectionPoints, other);
+  void setAnimacion(int estado){
+    animation=animaciones[estado];
   }
-
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    // TODO: implement onCollisionEnd
-    if(other is EmberPlayer){
-      //size/=2;
-      //if(intersectionPoints.first.y==(other.y+other.height)){
-      //removeFromParent();
-      //}
-
-    }
-    super.onCollisionEnd(other);
-  }
-
 
 
 }

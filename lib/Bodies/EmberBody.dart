@@ -28,6 +28,11 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
   bool hitByEnemy=false;
 
   int iVidas=3;
+  final double moveSpeed = 1500.0;
+
+  final double moveForce = 30000.0; // Force to apply
+  final double maxSpeed = 1150.0; // Maximum speed to cap movement
+
 
 
   EmberBody(this.joystick,this.initialPosition):super(renderBody: false);
@@ -50,18 +55,22 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
     // TODO: implement createBody
       miFixtureDef=FixtureDef(
       CircleShape()..radius = 32,
-      restitution: 1.8,
-      friction: 0.4,
-      density: 10
+      restitution: 0.4,
+      friction: 0.5,
+      density: 0.75
     );
 
     miBodyDef=BodyDef(
       userData: this,
-      angularDamping: 0.8,
-      gravityScale: Vector2(0, 30),
+      //angularDamping: 0.8,
+      fixedRotation: true,
+    //gravityScale: Vector2(0, 30),
       //linearVelocity: Vector2(60, 0),
       position: initialPosition ?? Vector2.zero(),
       type: BodyType.dynamic,
+      linearDamping: 0.1,
+      angularDamping: 0.1,
+      //linearVelocity: Vector2(800, 0)
       //gravityOverride: Vector2(0, 500),
     );
 
@@ -77,9 +86,9 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
   @override
   void update(double dt) {
 
-    Vector2 aceleracion2D=Vector2(horizontalDirection*300, 0);
+    //Vector2 aceleracion2D=Vector2(horizontalDirection*3000, 0);
     //body.linearVelocity=body.linearVelocity+aceleracion2D;
-    body.linearVelocity=Vector2(body.linearVelocity.x+aceleracion2D.x, body.linearVelocity.y+aceleracion2D.y);
+    //body.linearVelocity=Vector2(body.linearVelocity.x+aceleracion2D.x, body.linearVelocity.y+aceleracion2D.y);
     //print("---->>>>>>   ${body.linearVelocity}");
 
     if (horizontalDirection < 0 && emberSkin.scale.x > 0) {
@@ -89,6 +98,27 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
     }
     
     //camera.moveTo(position);
+
+    final velocity = body.linearVelocity;
+
+    // Move right and left without affecting Y velocity
+    if (horizontalDirection != 0) {
+      print("WTF???? $velocity");
+      if (velocity.x.abs() < maxSpeed) {
+
+        body.applyForce(Vector2(horizontalDirection * moveForce, 0));
+        //body.linearVelocity=Vector2(400, 0);
+      }
+      //body.applyLinearImpulse(Vector2(horizontalDirection * moveSpeed,0));
+      //body.linearVelocity=Vector2(horizontalDirection * moveSpeed, velocity.y);
+      //body.setLinearVelocity();
+    } else {
+
+      //body.linearVelocity=Vector2(0, velocity.y);
+      // If no input, stop horizontal movement
+      //body.linearVelocity=(Vector2(0, velocity.y));
+    }
+
 
   }
 

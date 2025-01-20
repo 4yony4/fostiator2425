@@ -29,7 +29,7 @@ class MisidraBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
   bool isLeftWall=false;
   bool hitByEnemy=false;
 
-  int iVidas=3;
+
 
 
   MisidraBody(this.initialPosition):super(renderBody: false);
@@ -88,7 +88,8 @@ class MisidraBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
 
     if(other is EmberBody){
       misidraSkin.scale=Vector2(2, 2);
-      body.angularVelocity=50;
+      misidraSkin.setAnimacion(misidraSkin.I_ANIMACION_TOCADO);
+      //body.angularVelocity=50;
     }
 
   }
