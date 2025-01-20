@@ -2,6 +2,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
+import 'package:fostiator/Network/WebSocketService.dart';
 
 import 'Apps/FostiatorApp.dart';
 import 'Games/Forge2DExample.dart';
@@ -13,6 +14,9 @@ void main() async{
       gameFactory: FostiatorGame.new,
     ),
   );
+
+  WebSocketService wss=WebSocketService();
+  wss.connect();
 
   /*runApp(
     const GameWidget<Forge2DExample>.controlled(
