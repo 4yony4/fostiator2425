@@ -1,0 +1,14 @@
+name: nakama-server
+data_dir: "/nakama/data"
+runtime:
+  http_key: "defaultkey"
+database:
+  address: "fostiator25:us-central1:nakama-db"
+console:
+  port: 7351
+  username: "admin"
+  password: "adminpass"
+socket:
+  port: 7350
+log:
+  level: "debug"

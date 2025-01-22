@@ -40,6 +40,8 @@ dependencies:
   flame_audio: ^2.10.6
   flame_forge2d: 0.18.2+3
   web_socket_channel: ^3.0.1
+  nakama: ^1.2.0
+  flutter_webrtc: ^0.12.6
 
 
 dev_dependencies:
