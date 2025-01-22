@@ -1,4 +1,5 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
@@ -7,16 +8,17 @@ import 'package:fostiator/Network/WebSocketService.dart';
 import 'Apps/FostiatorApp.dart';
 import 'Games/Forge2DExample.dart';
 import 'Menus/MainMenu.dart';
+import 'firebase_options.dart';
 
 void main() async{
-  runApp(
+  /*runApp(
     const GameWidget<FostiatorGame>.controlled(
       gameFactory: FostiatorGame.new,
     ),
   );
 
   WebSocketService wss=WebSocketService();
-  wss.connect();
+  wss.connect();*/
 
   /*runApp(
     const GameWidget<Forge2DExample>.controlled(
@@ -25,9 +27,10 @@ void main() async{
   );*/
 
 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-
-    /*runApp(
+    runApp(
       GameWidget<FostiatorGame>.controlled(
         gameFactory: FostiatorGame.new,
         overlayBuilderMap: {
@@ -35,7 +38,7 @@ void main() async{
         },
         initialActiveOverlays: const ['MainMenu'],
       ),
-    );*/
+    );
 
     //WidgetsFlutterBinding.ensureInitialized();
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
 
+import '../DataHolder.dart';
+
 
 class MainMenu extends StatelessWidget {
   // Reference to parent game.
@@ -18,7 +20,7 @@ class MainMenu extends StatelessWidget {
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          height: 250,
+          height: 550,
           width: 300,
           decoration: const BoxDecoration(
             color: blackTextColor,
@@ -50,6 +52,25 @@ class MainMenu extends StatelessWidget {
                   ),
                   child: const Text(
                     'Jugar',
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      color: blackTextColor,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 200,
+                height: 75,
+                child: ElevatedButton(
+                  onPressed: () {
+                    DataHolder().service.initConnection("1");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: whiteTextColor,
+                  ),
+                  child: const Text(
+                    'Unirse',
                     style: TextStyle(
                       fontSize: 40.0,
                       color: blackTextColor,

@@ -42,6 +42,9 @@ dependencies:
   web_socket_channel: ^3.0.1
   nakama: ^1.2.0
   flutter_webrtc: ^0.12.6
+  firebase_core: ^3.10.1
+  cloud_firestore: ^5.6.2
+  firebase_auth: ^5.4.1
 
 
 dev_dependencies:

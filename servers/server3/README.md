@@ -83,6 +83,7 @@ In this guide, you'll set up a **Hybrid P2P Multiplayer Solution** using **Flutt
    static-auth-secret=YOUR_SECRET_KEY
    no-loopback-peers
    ```
+   VER MAS EN EL FICHERO: README_COTURN_CONFIG.MD ( PARA GENERAR LA static-auth-secret)
 
 4. Enable and restart Coturn:
    ```bash

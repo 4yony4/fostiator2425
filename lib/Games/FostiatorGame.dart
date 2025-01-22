@@ -23,6 +23,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
   late JoystickComponent joystick;
   late EmberBody _emberBody,_emberBody2;
+  bool blGameStarted=false;
 
 
   FostiatorGame():super(gravity: Vector2(0.0, 10.0));
@@ -94,26 +95,32 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
 
     await add(joystick);
-    await world.add(_emberBody);
-    await world.add(_emberBody2);
+
 
 
     camera.viewfinder.zoom=0.2;
     camera.viewfinder.anchor=const Anchor(0.1, 0.5);
-    camera.follow(_emberBody);
+
 
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    double dist=(_emberBody.position.x-_emberBody2.position.x).abs();
-    double frac=dist/size.x;
-    camera.viewfinder.zoom=1-frac;
+    if(blGameStarted){
+      double dist=(_emberBody.position.x-_emberBody2.position.x).abs();
+      double frac=dist/size.x;
+      camera.viewfinder.zoom=1-frac;
+    }
+
 
   }
 
   void nuevoJuego() async{
+    await world.add(_emberBody);
+    await world.add(_emberBody2);
+    camera.follow(_emberBody);
+    blGameStarted=true;
 
     //await world.add(_emberBody);
     //camera.follow(_emberBody);
