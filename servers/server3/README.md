@@ -48,14 +48,26 @@ In this guide, you'll set up a **Hybrid P2P Multiplayer Solution** using **Flutt
 
 ## Step 2: Set Up Google Cloud TURN/STUN Server
 
-1. Create a Virtual Machine (VM) in Google Cloud:
+0. Setear el proyecto asignado a la carpeta al proyecto de Google Cloud:
    ```bash
-   gcloud compute instances create turn-server \
-       --machine-type=n1-standard-1 \
-       --image-project=debian-cloud \
-       --image-family=debian-12 \
-       --tags=turn
+   gcloud auth login
+   gcloud config set project PROJECT_ID
    ```
+
+1. Create a Virtual Machine (VM) in Google Cloud:
+   Creamos la instancia de la MV en Google Cloud, se puede ver en
+   https://console.cloud.google.com/compute/instances?referrer=search&inv=1&invt=Abngfw&project=fostiator25
+      ```bash
+      gcloud compute instances create turn-server \
+          --machine-type=n1-standard-1 \
+          --image-project=debian-cloud \
+          --image-family=debian-12 \
+          --tags=turn
+      ```
+   Conectamos la console de mi ordenador por SSH a la VM para poder operar los comandos de SUDO.
+      ```bash
+      gcloud compute ssh VM_NAME
+      ```
 
 2. Install Coturn TURN server:
    ```bash
