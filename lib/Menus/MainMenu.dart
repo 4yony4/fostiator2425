@@ -7,8 +7,9 @@ import '../DataHolder.dart';
 class MainMenu extends StatelessWidget {
   // Reference to parent game.
   final FostiatorGame game;
+  TextEditingController controller=TextEditingController();
 
-  const MainMenu({super.key, required this.game});
+  MainMenu({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +18,11 @@ class MainMenu extends StatelessWidget {
 
     return Material(
       color: Colors.transparent,
-      child: Center(
+      child:
+      Center(
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          height: 550,
+          height: 850,
           width: 300,
           decoration: const BoxDecoration(
             color: blackTextColor,
@@ -64,13 +66,14 @@ class MainMenu extends StatelessWidget {
                 height: 75,
                 child: ElevatedButton(
                   onPressed: () {
-                    DataHolder().service.initConnection("1");
+                    //if(controller.text.isNotEmpty)
+                      DataHolder().service.createOffer("sala1");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: whiteTextColor,
                   ),
                   child: const Text(
-                    'Unirse',
+                    'Crear Sala',
                     style: TextStyle(
                       fontSize: 40.0,
                       color: blackTextColor,
@@ -78,6 +81,43 @@ class MainMenu extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                width: 200,
+                height: 75,
+                child: ElevatedButton(
+                  onPressed: () {
+                    //if(controller.text.isNotEmpty)
+                    DataHolder().service.joinRoom("sala1");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: whiteTextColor,
+                  ),
+                  child: const Text(
+                    'Unirse a sala',
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      color: blackTextColor,
+                    ),
+                  ),
+                ),
+              ),
+              /*SizedBox(
+                width: 250,
+                child: TextField(
+                  controller: controller,
+                  style: const TextStyle(color: whiteTextColor),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[800],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintText: 'Enter text here',
+                    hintStyle: const TextStyle(color: Colors.white70),
+                  ),
+                ),
+              ),*/
               const SizedBox(height: 20),
               const Text(
                 '''Use WASD or Arrow Keys for movement.

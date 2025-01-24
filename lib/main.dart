@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:fostiator/Apps/P2PApp.dart';
 import 'package:fostiator/Games/FostiatorGame.dart';
 import 'package:fostiator/Network/WebSocketService.dart';
 
@@ -30,7 +31,8 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-    runApp(
+  runApp(const P2pApp());
+    /*runApp(
       GameWidget<FostiatorGame>.controlled(
         gameFactory: FostiatorGame.new,
         overlayBuilderMap: {
@@ -38,7 +40,7 @@ void main() async{
         },
         initialActiveOverlays: const ['MainMenu'],
       ),
-    );
+    );*/
 
     //WidgetsFlutterBinding.ensureInitialized();
 

@@ -16,13 +16,15 @@ import 'package:fostiator/Bodies/MisidraBody.dart';
 import 'package:fostiator/Characters/EmberPlayer.dart';
 import 'package:fostiator/Characters/Misidra.dart';
 import 'package:fostiator/Colisiones/CirularColision.dart';
+import 'package:fostiator/DataHolder.dart';
 
 import '../Colisiones/RectangularColision.dart';
 
 class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCollisionDetection{
 
   late JoystickComponent joystick;
-  late EmberBody _emberBody,_emberBody2;
+  //late EmberBody _emberBody,_emberBody2;
+  late List<EmberBody> _embers=[];
   bool blGameStarted=false;
 
 
@@ -67,8 +69,9 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
     );
 
 
-    _emberBody=EmberBody(joystick,Vector2(50, 100));
-    _emberBody2=EmberBody(joystick,Vector2(250, 100));
+    _embers.add(EmberBody(joystick,Vector2(50, 100)));
+    //_emberBody=EmberBody(joystick,Vector2(50, 100));
+    //_emberBody2=EmberBody(joystick,Vector2(250, 100));
 
 
 
@@ -96,31 +99,45 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
     await add(joystick);
 
-
-
-    camera.viewfinder.zoom=0.2;
+    camera.viewfinder.zoom=0.5;
     camera.viewfinder.anchor=const Anchor(0.1, 0.5);
 
-
+    //camera.follow(_embers[0]);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    if(blGameStarted){
-      double dist=(_emberBody.position.x-_emberBody2.position.x).abs();
-      double frac=dist/size.x;
-      camera.viewfinder.zoom=1-frac;
+    if(blGameStarted && _embers.length>1){
+      //double dist=(_emberBody.position.x-_emberBody2.position.x).abs();
+      //double frac=dist/size.x;
+      //camera.viewfinder.zoom=1-frac;
+      camera.viewfinder.zoom=getZoom();
     }
+  }
 
+  double getZoom(){
+    double posXMax=0;
+    double posXMin=size.x;
+    for(var ember in _embers){
+      if(ember.position.x<posXMin)posXMin=ember.position.x;
+      if(ember.position.x>posXMax)posXMax=ember.position.x;
+    }
+    double dist=posXMax-posXMin;
+    return dist/size.x;
 
   }
 
   void nuevoJuego() async{
-    await world.add(_emberBody);
-    await world.add(_emberBody2);
-    camera.follow(_emberBody);
+    for(var ember in _embers){
+      await world.add(ember);
+    }
+
+    //await world.add(_emberBody2);
+    camera.follow(_embers[0]);
     blGameStarted=true;
+
+    DataHolder().service.sendPosition(100,100);
 
     //await world.add(_emberBody);
     //camera.follow(_emberBody);
@@ -128,6 +145,10 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
     //camera.follow(_emberBody,snap: true);
     //add(EmberPlayer(position: Vector2(300, 100),joystick));
     //FlameAudio.bgm.play('music_back.mp3', volume: .75);
+  }
+
+  void nuevoJugador(){
+    _embers.add(EmberBody(joystick,Vector2(Random().nextInt(size.x.toInt()).toDouble() , 100)));
   }
 
   @override
