@@ -48,6 +48,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
       'misidra.jpeg',
       'misidra2.png',
       'misidra3.png',
+      'ember2.png'
     ]);
 
     await FlameAudio.audioCache.load('music_back.mp3');
@@ -70,7 +71,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
 
     //_embers.add(EmberBody(joystick,Vector2(50, 100),false));
-    _emberBody=EmberBody(joystick,Vector2(50, 100));
+    _emberBody=EmberBody(joystick,Vector2(Random().nextInt(400)+50, 100),true);
     //_emberBody2=EmberBody(joystick,Vector2(250, 100));
 
 
@@ -164,7 +165,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
   void nuevoJugador(){
     //_embers.add(EmberBody(joystick,Vector2(300 , 100),true));
-    _embers.add(EmberPlayer(position: Vector2(300 , 100)));
+    _embers.add(EmberPlayer(position: Vector2(Random().nextInt(400)+50 , 100),false));
   }
 
   @override

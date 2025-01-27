@@ -71,7 +71,8 @@ class PositionChannel {
       'iceServers': [
         {'urls': 'stun:stun.l.google.com:19302'},
         {
-          'urls': 'turn:34.45.93.254:3478',
+          //'urls': 'turn:34.45.93.254:3478',
+          'urls': 'turn:79.117.51.231:3478',
           'username': turnCreds['username'],
           'credential': turnCreds['password'],
         },

@@ -14,13 +14,15 @@ class EmberPlayer extends SpriteAnimationComponent
     with HasGameReference<FostiatorGame>, KeyboardHandler, CollisionCallbacks {
 
 
-  EmberPlayer({required super.position,}) :
+  final bool blMainPlayer;
+
+  EmberPlayer(this.blMainPlayer, {required super.position,}) :
         super(size: Vector2(64,64), anchor: Anchor.center);
 
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('ember.png'),
+      game.images.fromCache(blMainPlayer?'ember.png':'ember2.png'),
       SpriteAnimationData.sequenced(
         amount: 4,
         textureSize: Vector2.all(16),

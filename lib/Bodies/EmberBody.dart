@@ -34,15 +34,16 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
   final double maxSpeed = 1150.0; // Maximum speed to cap movement
 
 
+  final bool blMainPlayer;
 
-  EmberBody(this.joystick,this.initialPosition):super(renderBody: false);
+  EmberBody(this.joystick,this.initialPosition, this.blMainPlayer):super(renderBody: false);
 
   @override
   Future<void> onLoad() {
     // TODO: implement onLoad
     debugMode=false;
 
-    emberSkin = EmberPlayer( position: Vector2(0, 0));
+    emberSkin = EmberPlayer( position: Vector2(0, 0),blMainPlayer);
 
     add(emberSkin);
 
@@ -103,7 +104,7 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
 
     // Move right and left without affecting Y velocity
     if (horizontalDirection != 0) {
-      print("WTF???? $velocity");
+      //print("WTF???? $velocity");
       if (velocity.x.abs() < maxSpeed) {
 
         body.applyForce(Vector2(horizontalDirection * moveForce, 0));
@@ -125,6 +126,8 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     // TODO: implement onKeyEvent
+
+    //print("!!!!!!!----------");
 
     horizontalDirection = 0;
 
