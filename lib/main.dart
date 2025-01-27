@@ -31,7 +31,27 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const P2pApp());
+
+
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        body: GameWidget(
+          game: FostiatorGame(),
+          overlayBuilderMap: {
+            'MainMenu': (context, FostiatorGame game) {
+              return MainMenu(
+                game: game,
+              );
+            },
+          },
+          initialActiveOverlays: const ['MainMenu'],
+        ),
+      ),
+    ),
+  );
+
+  //runApp(const P2pApp());
     /*runApp(
       GameWidget<FostiatorGame>.controlled(
         gameFactory: FostiatorGame.new,

@@ -33,9 +33,10 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
   final double moveForce = 30000.0; // Force to apply
   final double maxSpeed = 1150.0; // Maximum speed to cap movement
 
+  final bool isRemote;
 
 
-  EmberBody(this.joystick,this.initialPosition):super(renderBody: false);
+  EmberBody(this.joystick,this.initialPosition, this.isRemote):super(renderBody: false);
 
   @override
   Future<void> onLoad() {
@@ -125,6 +126,9 @@ class EmberBody extends BodyComponent with KeyboardHandler, ContactCallbacks{
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     // TODO: implement onKeyEvent
+    if(isRemote)return false;
+
+    print("!!!!!!!!!!!!!!!");
 
     horizontalDirection = 0;
 
