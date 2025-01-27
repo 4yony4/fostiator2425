@@ -69,6 +69,7 @@ class PositionChannel {
 
     final configuration = {
       'iceServers': [
+        {'urls': 'stun:stun.l.google.com:19302'},
         {
           'urls': 'turn:34.45.93.254:3478',
           'username': turnCreds['username'],
@@ -101,6 +102,8 @@ class PositionChannel {
 
       // Watch for state changes. Once it's "open", we can notify that we're connected.
       _dataChannel?.onDataChannelState = (RTCDataChannelState state) {
+        print("HEY HEY HEY!!!!444444 $state");
+
         if (state == RTCDataChannelState.RTCDataChannelOpen) {
           debugPrint('Data channel is OPEN (callee).');
           onConnected?.call();
@@ -167,7 +170,7 @@ class PositionChannel {
         final answer = data['answer'];
         final sdp = RTCSessionDescription(answer['sdp'], answer['type']);
         await _peerConnection!.setRemoteDescription(sdp);
-
+        print("HEY HEY HEY!!!!22222222");
         // Now that remoteDescription is set, flush any buffered candidates
         for (final candidate in _candidateBuffer) {
           await _peerConnection!.addCandidate(candidate);
@@ -196,6 +199,7 @@ class PositionChannel {
         await _peerConnection!.setRemoteDescription(sdp);
 
         // Now flush buffered ICE candidates
+        print("HEY HEY HEY!!!!3333333333");
         for (final candidate in _candidateBuffer) {
           await _peerConnection!.addCandidate(candidate);
         }
@@ -240,6 +244,7 @@ class PositionChannel {
           );
 
           final remoteDesc = await _peerConnection?.getRemoteDescription();
+          print("HEY HEY HEY!!!! $remoteDesc");
           if (remoteDesc == null) {
             _candidateBuffer.add(candidate);
           } else {

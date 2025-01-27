@@ -70,7 +70,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
 
 
     //_embers.add(EmberBody(joystick,Vector2(50, 100),false));
-    _emberBody=EmberBody(joystick,Vector2(50, 100),false);
+    _emberBody=EmberBody(joystick,Vector2(50, 100));
     //_emberBody2=EmberBody(joystick,Vector2(250, 100));
 
 
@@ -108,7 +108,7 @@ class FostiatorGame extends Forge2DGame with HasKeyboardHandlerComponents,HasCol
   @override
   void update(double dt) {
     super.update(dt);
-    if(blGameStarted && _embers.length>0){
+    if(blGameStarted && _embers.isNotEmpty){
       //double dist=(_emberBody.position.x-_emberBody2.position.x).abs();
       //double frac=dist/size.x;
       //camera.viewfinder.zoom=1-frac;
